@@ -1,4 +1,4 @@
-# Docs: https://caddyserver.com/docs/caddyfile  
+# Docs: https://caddyserver.com/docs/caddyfile
 
 # 配置一组站点的域名
 # 支持配置多个域名，域名之间用逗号分隔
