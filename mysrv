@@ -14,6 +14,7 @@ install (){
     sudo chmod -R 777 ./*
     echo "mysrv installing..."
     echo " "
+    cd /tmp
     sudo curl -fsSL https://get.docker.com -o get-docker.sh
     sudo sh get-docker.sh
     sudo usermod -aG docker ${USER}
@@ -26,8 +27,10 @@ install (){
     echo "test your server:"
     docker -v && docker-compose -v
     ln -s $DIR/mysrv /usr/bin/mysrv
+    cd $DIR
+    cp env-example .env
     echo " "
-    echo "mysrv installed."
+    echo "mysrv installed. Your can: vim ${DIR}/.env"
 }
 
 init (){

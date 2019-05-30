@@ -23,7 +23,7 @@ cd mysrv
 
 若您不喜欢使用 git，也可以从这里 [下载最新版本的压缩包](https://github.com/akirarika/mysrv/archive/master.zip) 后自行解压。
 
-### 安装 Docker
+### 安装
 
 mysrv 是基于 Docker 的，您必须确认您是否安装了 Docker：
 
@@ -42,13 +42,14 @@ docker -v && docker-compose -v
 
 来一键安装 Docker 与 Docker Compose！
 
-### 进入开发环境
-
-首先，复制一份配置文件：
+最后，为 mysrv 生成配置：
 
 ```
 cp env-example .env
+# 如果您进行过 `./mysrv install`，则无需执行此步
 ```
+
+### 进入开发环境
 
 只要运行这个命令：
 
