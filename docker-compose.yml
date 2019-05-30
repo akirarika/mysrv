@@ -60,7 +60,7 @@ services:
   workspace:
     build: ./workspace
     ports:
-      - "18340:18340"
+      - "7009:7009"
     volumes:
       - ${PROJ_PATH}:/proj
     stdin_open: true
