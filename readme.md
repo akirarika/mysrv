@@ -159,7 +159,7 @@ webhook
 caddy php workspace
 ```
 
-这个设定对您使用 docker-compose 脚本并没有效果，但对您使用 mysrv 脚本有效。想了解请阅读下一节内容。
+这个设定对您使用 docker-compose 命令并没有效果，但对您使用 mysrv 脚本有效。想了解请阅读下一节内容。
 
 ### mysrv 脚本
 
