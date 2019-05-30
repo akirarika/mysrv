@@ -63,5 +63,7 @@ services:
       - "7009:7009"
     volumes:
       - ${PROJ_PATH}:/proj
+      - ./workspace/hooks.json:/app/webhook/hooks.json
+      - ./workspace/shellscript:/shellscript
     stdin_open: true
     tty: true

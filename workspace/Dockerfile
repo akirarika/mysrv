@@ -59,14 +59,14 @@ RUN echo "Install Java.." \
     && apt-get install -y default-jdk maven \
     && apt-get clean
 
-# 安装 git-webhook
+# 安装 webhook
 RUN echo "Install webhook.." \
     && cd "/app" \
     && wget "https://github.com/adnanh/webhook/releases/download/2.6.9/webhook-linux-amd64.tar.gz" \
     && tar -zxvf webhook-linux-amd64.tar.gz \
     && mv /app/webhook-linux-amd64 /app/webhook \
     && rm -rf /app/webhook-linux-amd64.tar.gz \
-    && echo "[{\"id\":\"test\",\"execute-command\":\"/app/webhook/test.sh\",\"command-working-directory\":\"/tmp\"}]" > /app/webhook/hooks.json \
+    # && echo "[{\"id\":\"test\",\"execute-command\":\"/app/webhook/test.sh\",\"command-working-directory\":\"/tmp\"}]" > /app/webhook/hooks.json \
     && echo "#!/bin/bash" > /app/webhook/test.sh \
     && echo "echo \"Tested! Please run: cat /tmp/test-output.txt\"" >> /app/webhook/test.sh \
     && echo "echo \`date\` >> ./test-output.txt" >> /app/webhook/test.sh \

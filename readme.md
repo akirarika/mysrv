@@ -106,6 +106,7 @@ php # 世界上最好的语言。
 1. 编程开发 (vim index.php ...)
 2. 测试调试 (php -f 'unit-test.php' ...)
 3. 安装您代码需要的依赖 (composer update ...)
+4. 尝试一些可能会有危险的东西
 
 或者，您也可以将它当成一个可以方便地创建和销毁的沙箱环境，在其中随便做您愿意做的任何事！
 
@@ -113,7 +114,6 @@ php # 世界上最好的语言。
 
 ```
 ./mysrv
-# 若您在中国大陆地区，因网络原因等待时间过长，请考虑使用国内的 Docker 镜像仓库和为 Docker 配置代理。
 ```
 
 如果之后想快速初始化重置它，请：
@@ -124,6 +124,89 @@ php # 世界上最好的语言。
 
 但是，请注意：请不要将 **任何作用于生产环境的代码和程序** 在此处长期运行！workspace 容器不应当有任何一个端口开放到公网环境！它应当 **仅用来开发和测试！**
 
+目前该容器中，提供的工具软件环境有：
+```
+zsh
+
+wget curl
+
+vim nano
+
+tar zip
+
+git
+
+python pip
+
+php composer
+
+nodejs npm yarn
+
+java maven
+
+webhook
 ```
 
+### 我的代码应该在哪里
+
+默认情况下，您的代码是在 mysrv 外层目录内的。
+
+假设您将 mysrv 放置在了 `~/MyCode/mysrv`
+
+那么，您的代码应该存放在 `~/MyCode`
+
+假设您写了两个项目，分别是 `project1` `project2`
+
+那么，它们的代码应该存放在：
+
 ```
+~/Documents/MyCode/project1
+~/Documents/MyCode/project2
+```
+
+所有位于 `~/Documents/MyCode` 的文件，都将被同步到各个容器内部的 `/proj` 中，方便运行和更改。
+
+### 搭建 Git 代码托管服务器和让您的代码自动部署
+
+mysrv 集成了 gogs 和 webhook，要使用，请：
+
+1. 在 gogs 和 workspace 容器运行后 (webhook 是安装在 workspace 容器内的)，访问 http://127.0.0.1:3000 (gogs 的 web 管理界面) 来安装 gogs。
+
+2. 进入安装页面，选择使用 Mysql 或 Sqlite，后者较为省事，看您的喜好。其他配置项请保留默认值。
+
+3. 在安装完成后，注册并登录一个新帐号，创建一个新项目（假设名为 demo）
+
+4. 好了，我们暂且放一放 gogs 上面的工作，回到 mysrv 里来。打开 mysrv 中的 workspace 文件夹，编辑 hooks.json 文件：
+
+```json
+[
+    ... // 以前的内容
+    ,{
+        "id": "demo", // 该 webhook 的 id，会体现到 url 上
+        "execute-command": "/shellscript/pull.sh", // 钩子被触发后，需要执行的脚本
+        // 您注意到 workspace 文件夹里还有一个 shellscript 的子文件夹吗？这个文件夹里的
+        // 脚本文件会同步到 workspace 容器内的 /shellscript 目录中。
+        "command-working-directory": "/proj/demo" // 脚本工作目录，钩子出发后执行的
+        // 脚本将从该路径执行，一般设置为该项目的路径为佳。
+    }
+]
+```
+
+5. 然后保存，我们就 webhook 创建了一个新的钩子。当有 HTTP 请求访问 `http://workspace:7009/hooks/{您刚刚设置的id}` 时，钩子所设置的脚本将被运行。
+
+6. 好了，我们进入 workspace 文件夹里的 shellscript 子目录，新增一个 `pull.sh`，在其中编写如下内容：
+
+```bash
+#!/bin/bash
+echo '钩子成功触发了' > ./钩子成功触发了.txt
+```
+
+7. 之后赋予给它权限 `chmod -R 777 ./pull.sh` 当 webhook 被执行时，它就会执行咯。如果在里面添加 `git pull`，它就会自动拉取代码。您也可以让它帮你自动迁移数据库、安装和更新依赖等，在此不再赘述，
+
+8. 为了让钩子生效，我们回到 gogs，进入您之前新建的名为 demo 的仓库，打开 仓库设置->管理 web 钩子->添加 web 钩子->Gogs
+
+9. 在推送地址填写 `http://workspace:7009/hooks/demo`，其他选项暂时保持默认值即可。
+
+10. 在您的电脑上或者 workspace 容器内部进入代码存放目录 (不清楚?请查看前文的 "我的代码应该在哪里" 小节)，将您在 gogs 中新增的 demo 仓库 clone 下来，随便写点什么并推送。
+
+11. 推送后，查看您的代码存放目录，是否多出来了一个 "钩子成功触发了.txt" 的文件？如果是，说明您成功了。每当您的代码 Push 过后，该脚本都会执行。

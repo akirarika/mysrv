@@ -1,0 +1,12 @@
+[
+    {
+        "id": "test",
+        "execute-command": "/app/webhook/test.sh",
+        "command-working-directory": "/tmp"
+    },
+    {
+        "id": "demo",
+        "execute-command": "/shellscript/demo.sh",
+        "command-working-directory": "/proj/demo"
+    }
+]
