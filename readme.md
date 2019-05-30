@@ -214,9 +214,9 @@ mysrv 集成了 gogs 和 webhook，要使用，请：
 
 3. 在安装完成后，注册并登录一个新帐号，创建一个新项目（假设名为 demo）
 
-4. 好了，我们暂且放一放 gogs 上面的工作，回到 mysrv 里来。打开 mysrv 中的 workspace 文件夹，编辑 hooks.json 文件：
+4. 好了，我们暂且放一放 gogs 上面的工作，回到 mysrv 里来。打开 mysrv 中的 workspace 文件夹，编辑 hooks.json 文件 **(记得删除注释！)** ：
 
-```json
+```javascript
 [
     ... // 以前的内容
     ,{
