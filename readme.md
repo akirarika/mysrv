@@ -21,7 +21,7 @@ git clone https://github.com/akirarika/mysrv.git
 cd mysrv
 ```
 
-若您不喜欢使用 git，也可以从这里[下载最新版本的压缩包](https://github.com/akirarika/mysrv/archive/master.zip)后自行解压。
+若您不喜欢使用 git，也可以从这里 [下载最新版本的压缩包](https://github.com/akirarika/mysrv/archive/master.zip) 后自行解压。
 
 ### 安装 Docker
 
@@ -31,7 +31,7 @@ mysrv 是基于 Docker 的，您必须确认您是否安装了 Docker：
 docker -v && docker-compose -v
 ```
 
-若您没有安装 Dcoker，在 Windows 与 Mac 下，请您参考官方文档来安装。
+若您没有安装 Dcoker，在 Windows 与 Mac 下，请您下载并安装 [Docker 桌面版](https://www.docker.com/get-started)。
 
 在 Linux 下，您可以输入：
 
