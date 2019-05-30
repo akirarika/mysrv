@@ -1,0 +1,47 @@
+# Docs: https://caddyserver.com/docs/caddyfile  
+
+# 配置一组站点的域名
+# 支持配置多个域名，域名之间用逗号分隔
+# 配置时可指定端口或协议，一般建议在测试时，指定 localhost:80
+# 而不是 0.0.0.0，因为，如若发布到生产环境，0.0.0.0 将可以
+# 被用户通过 ip 来访问。
+# 对于在本地环境测试，未部署在外网时，请显性指定 80 端口或为
+# http 协议，因为如若不指定，Caddy 将自动前往 let's encrypt
+# 申请证书。
+# 内网环境域名指定示例：
+# localhost:80, http://your.domain.test
+# 公网环境域名指定示例：
+# localhost:80, https://your.domain.com
+localhost:80, http://proj.test {
+    root /proj/laravel/public
+    # 将请求转发到 php 中
+    # caddy 容器内待转发的文件，其路径必须和 php 容器中的路径完全一致，
+    # 并且必须该文件存在且拥有权限，否则将会 "Primary script unknown"
+    fastcgi / php:9000 php {
+        index index.php
+    }
+
+    # 路由转发规则，将流量都转发到 index.php 中，一般的 PHP 框架均采用这
+    # 种方式来实现路由和伪静态
+    rewrite {
+        to {path} {path}/ /index.php?{query}
+    }
+
+    # 日志文件路径
+    # 将日志文件写入到 /logs 目录中时，在容器外部可以读取到
+    log /logs/access.log
+    errors /logs/error.log
+
+    # 自动开启 gzip 压缩，节省数据传输流量
+    gzip
+    
+    # 资源管理器
+    # 开启后当不存在默认页面时，会显示资源管理器来为用户导航
+    # 对于非静态资源类目录时，不推荐开启此项，将会泄露文件路径
+    #browse
+
+    # 本地开发用 HTTPS 证书
+    # 开启后将在内存中生成并使用不受信任的自签名证书，持续7天（足以进行本地开发）
+    #tls self_signed
+
+}

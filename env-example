@@ -1,0 +1,14 @@
+# 您工程代码所存放的目录
+PROJ_PATH=../
+
+# 初始化数据库时需要的讯息
+DB_NAME=default
+DB_USER=user
+DB_PASSWORD=yourPassword
+DB_ROOT_PASSWORD=yourRootPassword
+
+# Caddy File 名称
+# 您可能需要在生产环境与本地环境不使用同一份配置文件
+# 此时仅需修改此处名称即可
+CADDYFILE_NAME=dev
+#CADDYFILE_NAME=srv

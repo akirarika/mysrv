@@ -1,0 +1,65 @@
+version: '3.2'
+services:
+  mysql:
+    build: ./mysql
+    ports:
+      - "3306:3306"
+    volumes:
+        - ./mysql/data:/var/lib/mysql
+        - ./mysql/logs:/var/lib/mysql-logs
+        - ./mysql/conf:/etc/mysql/conf.d:ro
+    environment:
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+    restart: always
+    command: ['--character-set-server=utf8mb4', '--collation-server=utf8mb4_unicode_ci','--default-authentication-plugin=mysql_native_password']
+
+  gogs:
+    links:
+      - mysql
+    build: ./gogs
+    ports:
+      - "10022:22"
+      - "3000:3000"
+    volumes:
+      - ./gogs/data:/data/git/gogs-repositories
+    environment:
+      - "SOCAT_LINK=true"
+      - "RUN_CROND=true"
+
+  caddy:
+    build: ./caddy
+    ports:
+      - "80:80"
+      - "443:443"
+      - "2015:2015"
+    volumes:
+      - ${PROJ_PATH}:/proj
+      - ./caddy/conf/${CADDYFILE_NAME}:/etc/Caddyfile
+      - ./caddy/data:/root/.caddy
+      - ./caddy/logs:/logs
+
+  php:
+    build: ./php
+    ports:
+      - "9000:9000"
+    links:
+      - caddy
+    volumes:
+      - ${PROJ_PATH}:/proj
+      - ./php/conf/php.ini:/usr/local/etc/php/php.ini
+      - ./php/conf/php-fpm.conf:/usr/local/etc/php-fpm.conf
+      - ./php/logs:/var/log/php-fpm
+    restart: always
+    command: php-fpm
+
+  workspace:
+    build: ./workspace
+    ports:
+      - "18340:18340"
+    volumes:
+      - ${PROJ_PATH}:/proj
+    stdin_open: true
+    tty: true
