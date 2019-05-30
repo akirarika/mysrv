@@ -44,7 +44,7 @@ docker -v && docker-compose -v
 
 最后，为 mysrv 生成配置：
 
-```
+```sh
 cp env-example .env
 # 如果您进行过 `./mysrv install`，则无需执行此步
 ```
