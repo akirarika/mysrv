@@ -3,8 +3,10 @@
 /caddy/logs
 !./caddy/logs/.gitkeep
 
-/gogs/data
-!./gogs/data/.gitkeep
+/gogs/data/git
+/gogs/data/db
+!./gogs/data/git/.gitkeep
+!./gogs/data/db/.gitkeep
 /gogs/logs
 !./gogs/logs/.gitkeep
 

@@ -24,7 +24,9 @@ services:
       - "10022:22"
       - "3000:3000"
     volumes:
-      - ./gogs/data:/data/git/gogs-repositories
+      - ./gogs/data/git:/data/git/gogs-repositories
+      - ./gogs/data/db:/data/gogs/data
+      - ./gogs/logs:/app/gogs/log
     environment:
       - "SOCAT_LINK=true"
       - "RUN_CROND=true"

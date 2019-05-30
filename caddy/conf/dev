@@ -1,22 +1,32 @@
 # Docs: https://caddyserver.com/docs/caddyfile
 
+
+#tls self_signed
+
 # 配置一组站点的域名
 # 支持配置多个域名，域名之间用逗号分隔
 # 配置时可指定端口或协议，一般建议在测试时，指定 localhost:80
-# 而不是 0.0.0.0，因为，如若发布到生产环境，0.0.0.0 将可以
-# 被用户通过 ip 来访问。
+# 而不是 0.0.0.0，因为，如若发布到生产环境，0.0.0.0 用户将
+# 可以通过 ip 来访问。
 # 对于在本地环境测试，未部署在外网时，请显性指定 80 端口或为
 # http 协议，因为如若不指定，Caddy 将自动前往 let's encrypt
-# 申请证书。
+# 申请证书，证书申请失败将导致 Caddy 启动失败并消耗该域名的申请
+# 次数。
 # 内网环境域名指定示例：
 # localhost:80, http://your.domain.test
 # 公网环境域名指定示例：
 # localhost:80, https://your.domain.com
-localhost:80, http://proj.test {
+localhost {
+    # 显性指定禁用 tls
+    # 本地环境开发时，可以考虑启用此项
+    #tls off
+
+    # 站点根目录，您的代码均存放在 /proj 目录内
     root /proj/laravel/public
-    # 将请求转发到 php 中
-    # caddy 容器内待转发的文件，其路径必须和 php 容器中的路径完全一致，
-    # 并且必须该文件存在且拥有权限，否则将会 "Primary script unknown"
+
+    # 开启 php 功能，将 .php 扩展名的文件递交给 php-fpm 处理
+    # 您在 caddy 容器中的代码，其路径必须和 php-fpm 容器中的路径完全一致，
+    # 否则 php-fpm 将会抛出 "Primary script unknown" 的异常。
     fastcgi / php:9000 php {
         index index.php
     }
@@ -37,7 +47,7 @@ localhost:80, http://proj.test {
     
     # 资源管理器
     # 开启后当不存在默认页面时，会显示资源管理器来为用户导航
-    # 对于非静态资源类目录时，不推荐开启此项，将会泄露文件路径
+    # 对于非静态资源类目录时，不推荐开启此项，将会面临泄露文件路径的风险。
     #browse
 
     # 本地开发用 HTTPS 证书
