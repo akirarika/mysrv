@@ -204,7 +204,7 @@ caddy php workspace
 
 所有位于 `~/Documents/MyCode` 的文件，都将被同步到各个容器内部的 `/proj` 中，方便运行和更改。
 
-### 搭建 Git 代码托管服务器和让您的代码自动部署
+### 搭建 Git 代码托管服务器 && 实现提交代码后自动部署
 
 mysrv 集成了 gogs 和 webhook，要使用，请：
 
