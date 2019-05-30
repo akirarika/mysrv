@@ -16,6 +16,11 @@ services:
     restart: always
     command: ['--character-set-server=utf8mb4', '--collation-server=utf8mb4_unicode_ci','--default-authentication-plugin=mysql_native_password']
 
+  adminer:
+    image: "adminer:latest"
+    ports:
+      - "8080:8080"
+      
   gogs:
     links:
       - mysql
