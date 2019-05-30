@@ -1,25 +1,23 @@
-/caddy/data
-!./caddy/data/.gitkeep
-/caddy/logs
-!./caddy/logs/.gitkeep
+caddy/data/*
+!caddy/data/.gitkeep
+caddy/logs/*
+!caddy/logs/.gitkeep
 
-/gogs/data/git
-/gogs/data/db
-!./gogs/data/git/.gitkeep
-!./gogs/data/db/.gitkeep
-/gogs/logs
-!./gogs/logs/.gitkeep
+gogs/data/git/*
+gogs/data/db/*
+!gogs/data/git/.gitkeep
+!gogs/data/db/.gitkeep
+gogs/logs/*
+!gogs/logs/.gitkeep
 
-/mysql/data
-!./mysql/data/.gitkeep
-/mysql/logs
-!./mysql/logs/.gitkeep
+mysql/data/*
+!mysql/data/.gitkeep
+mysql/logs/*
+!mysql/logs/.gitkeep
 
 
-/php/logs
-!./php/logs/.gitkeep
+php/logs/*
+!php/logs/.gitkeep
 
 .DS_Store
 .env
-
-!.gitkeep
