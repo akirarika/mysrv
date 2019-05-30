@@ -36,7 +36,7 @@ docker -v && docker-compose -v
 在 Linux 下，您可以输入：
 
 ```sh
-./mysrv i
+./mysrv install
 # 需要 Root 权限，系统必须安装有 `curl`
 ```
 
@@ -146,6 +146,44 @@ java maven
 
 webhook
 ```
+
+### 定义所使用到的容器
+
+您经常并不会需要运行所有的容器，假设您的代码是使用 PHP 语言编写的，那么您完全用不上 Java 容器。
+
+您可以编辑在 mysrv 根目录下的 `.cntrLst` 文件来规定您需要启动的容器，用空格分隔。
+
+以下是仅启动 caddy、php 和 workspace 容器：
+
+```
+caddy php workspace
+```
+
+这个设定对您使用 docker-compose 脚本并没有效果，但对您使用 mysrv 脚本有效。想了解请阅读下一节内容。
+
+### mysrv 脚本
+
+根目录存在一个名为 mysrv 的 shell 脚本，它为您提供了一些封装好的快捷操作。
+
+1. `mysrv` 启动并进入 Workspace 容器。
+
+2. `mysrv init` 初始化 Workspace 容器。
+
+3. `mysrv install` 一键安装 Mysrv，Docker，Docker Compose，仅适用于 Linux 系统。
+
+4. `mysrv open {容器名称}` 进入指定的容器。
+
+5. `mysrv start` 启动容器，列表读取自 `.cntrLst`。
+
+6. `mysrv stop` 停止容器，列表读取自 `.cntrLst`。
+
+7. `mysrv restart` 重启容器，列表读取自 `.cntrLst`。
+
+8.  `mysrv delete` 删除所有容器。
+
+9.  `mysrv dir` 获取 mysrv 所在路径，并切换于此。
+
+10.  `mysrv proj` 获取 mysrv 所在上层文件夹的路径，并切换于此。
 
 ### 我的代码应该在哪里
 

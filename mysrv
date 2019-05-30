@@ -1,6 +1,16 @@
-﻿#!/bin/bash
+#!/bin/bash
 
-function i {
+SOURCE="$0"
+while [ -h "$SOURCE"  ]; do # resolve $SOURCE until the file is no longer a symlink
+    DIR="$( cd -P "$( dirname "$SOURCE"  )" && pwd  )"
+    SOURCE="$(readlink "$SOURCE")"
+    [[ $SOURCE != /*  ]] && SOURCE="$DIR/$SOURCE" # if $SOURCE was a relative symlink, we need to resolve it relative to the path where the symlink file was located
+done
+DIR="$( cd -P "$( dirname "$SOURCE"  )" && pwd  )"
+
+cd $DIR
+
+install (){
     sudo chmod -R 777 ./*
     echo "mysrv installing..."
     echo " "
@@ -15,87 +25,55 @@ function i {
     echo " "
     echo "test your server:"
     docker -v && docker-compose -v
+    ln -s $DIR/mysrv /usr/bin/mysrv
     echo " "
     echo "mysrv installed."
 }
 
-function u {
-    for i in `ls -F |grep "/$"`
-    do
-        cd $i
-        if [ -f "docker-compose.yml" ]; then
-            if [ ! -f ".cntrLst" ]; then
-                echo "docker-compose up --detach"
-                docker-compose up --detach
-            else
-                echo "docker-compose up --detach `cat .cntrLst`"
-                docker-compose up --detach `cat .cntrLst`
-            fi
-        fi
-        cd ../
-    done
+init (){
+    docker-compose up --detach --build --force-recreate workspace
 }
 
-function s {
-    for i in `ls -F |grep "/$"`
-    do
-        cd $i
-        if [ -f "docker-compose.yml" ]; then
-            docker-compose stop
-        fi
-        cd ../
-    done
+open (){
+    docker-compose exec $2 /bin/sh
 }
 
-function r {
-    for i in `ls -F |grep "/$"`
-    do
-        cd $i
-        if [ -f "docker-compose.yml" ]; then
-            docker-compose restart
-        fi
-        cd ../
-    done
+start(){
+    echo "[RUN] docker-compose up --detach `cat .cntrLst`"
+    docker-compose up --detach `cat .cntrLst`
 }
 
-function t {
-    cd $1
-    docker-compose config
-    cd ../
+stop(){
+    echo "[RUN] docker-compose stop --timeout 42 `cat .cntrLst`"
+    docker-compose stop --timeout 42 `cat .cntrLst`
 }
 
-function o {
-    cd $1
-    pwd
-    docker-compose exec $2 bash
-    cd ../
+restart(){
+    echo "[RUN] docker-compose restart --timeout 42 `cat .cntrLst`"
+    docker-compose restart --timeout 42 `cat .cntrLst`
 }
 
-function d {
-    echo "[删库跑路] 输入 1 删除所有镜像，输入 2 停止、删除所有容器"
-    echo "！注意：这将对于系统中的所有 Docker 镜像或容器生效，而不是仅对应 mysrv 内的工程。"
-    read -p "请输入: " i
-    if [ "$i" == "1" ]; then 
-        # 删除所有镜像
-        docker image prune -f -a
-    elif [ "$i" == "2" ]; then 
-        docker stop $(docker ps -a -q)
-        docker container prune -f
-    fi
-}
-
-function p {
-    git pull
-    read -p "是否执行 git reset --hard 操作？[y/N]" i
+delete(){
+    read -p "[y/N]: " i
     if [ "$i" == "y" ]; then 
-        git reset --hard
-        git pull
-    fi
-    chmod -R 777 ./*
-    read -p "是否对所有工程发送重启命令？[y/N]" i
-    if [ "$i" == "y" ]; then 
-        ./mysrv r
+        docker-compose rm --force
     fi
 }
+
+proj(){
+    PROJDIR=$(cd "${DIR}/..";pwd)
+    echo "Your project dir: $PROJDIR"
+    cd $PROJDIR
+}
+
+dir(){
+    echo "Mysrv dir: $DIR"
+    cd $DIR
+}
+
+if [ ! -n "$1" ]; then 
+    docker-compose up --detach workspace
+    docker-compose exec workspace /bin/zsh
+fi
 
 $1 $2 $3

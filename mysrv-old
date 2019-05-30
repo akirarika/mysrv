@@ -1,0 +1,101 @@
+#!/bin/zsh
+
+function i (){
+    sudo chmod -R 777 ./*
+    echo "mysrv installing..."
+    echo " "
+    sudo curl -fsSL https://get.docker.com -o get-docker.sh
+    sudo sh get-docker.sh
+    sudo usermod -aG docker ${USER}
+    sudo systemctl enable docker
+    sudo systemctl start docker
+    sudo curl -L "https://github.com/docker/compose/releases/download/1.24.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+    sudo chmod +x /usr/local/bin/docker-compose
+    sudo ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
+    echo " "
+    echo "test your server:"
+    docker -v && docker-compose -v
+    echo " "
+    echo "mysrv installed."
+}
+
+function u (){
+    for i in `ls -F |grep "/$"`
+    do
+        cd $i
+        if [ -f "docker-compose.yml" ]; then
+            if [ ! -f ".cntrLst" ]; then
+                echo "docker-compose up --detach"
+                docker-compose up --detach
+            else
+                echo "docker-compose up --detach `cat .cntrLst`"
+                docker-compose up --detach `cat .cntrLst`
+            fi
+        fi
+        cd ../
+    done
+}
+
+function s {
+    for i in `ls -F |grep "/$"`
+    do
+        cd $i
+        if [ -f "docker-compose.yml" ]; then
+            docker-compose stop
+        fi
+        cd ../
+    done
+}
+
+function r (){
+    for i in `ls -F |grep "/$"`
+    do
+        cd $i
+        if [ -f "docker-compose.yml" ]; then
+            docker-compose restart
+        fi
+        cd ../
+    done
+}
+
+function t (){
+    cd $1
+    docker-compose config
+    cd ../
+}
+
+function o (){
+    cd $1
+    pwd
+    docker-compose exec $2 bash
+    cd ../
+}
+
+function d (){
+    echo "[删库跑路] 输入 1 删除所有镜像，输入 2 停止、删除所有容器"
+    echo "！注意：这将对于系统中的所有 Docker 镜像或容器生效，而不是仅对应 mysrv 内的工程。"
+    read -p "请输入: " i
+    if [ "$i" == "1" ]; then 
+        # 删除所有镜像
+        docker image prune -f -a
+    elif [ "$i" == "2" ]; then 
+        docker stop $(docker ps -a -q)
+        docker container prune -f
+    fi
+}
+
+function p (){
+    git pull
+    read -p "是否执行 git reset --hard 操作？[y/N]" i
+    if [ "$i" == "y" ]; then 
+        git reset --hard
+        git pull
+    fi
+    chmod -R 777 ./*
+    read -p "是否对所有工程发送重启命令？[y/N]" i
+    if [ "$i" == "y" ]; then 
+        ./mysrv r
+    fi
+}
+
+$1 $2 $3
