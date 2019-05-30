@@ -208,7 +208,7 @@ caddy php workspace
 
 mysrv 集成了 gogs 和 webhook，要使用，请：
 
-1. 在 gogs 和 workspace 容器运行后 (webhook 是安装在 workspace 容器内的)，访问 http://127.0.0.1:3000 (gogs 的 web 管理界面) 来安装 gogs。
+1. 在 gogs 和 workspace 容器运行后 (webhook 是安装在 workspace 容器内的)，访问 http://localhost:3000 (gogs 的 web 管理界面) 来安装 gogs。
 
 2. 进入安装页面，选择使用 Mysql 或 Sqlite，后者较为省事，看您的喜好。其他配置项请保留默认值。
 
