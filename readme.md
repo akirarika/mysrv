@@ -25,12 +25,6 @@ cd mysrv
 
 ### Linux 下安装
 
-mysrv 是基于 Docker 的，您必须确认您是否安装了 Docker：
-
-```sh
-docker -v && docker-compose -v
-```
-
 mysrv 崇尚直接在云服务器上编码、调试和执行，所以制作了一个在 Linux 下的一键安装部署的脚本。
 
 在 Linux 下，您可以输入：
@@ -43,6 +37,12 @@ mysrv 崇尚直接在云服务器上编码、调试和执行，所以制作了�
 来一键安装 Mysrv、 Docker 与 Docker Compose。至此，安装完成。
 
 ### 非 Linux 下安装
+
+mysrv 是基于 Docker 的，您必须确认您是否安装了 Docker：
+
+```sh
+docker -v && docker-compose -v
+```
 
 若您在 Windows10 与 Mac 下使用，没有安装 Dcoker，请您下载并安装 [Docker 桌面版](https://www.docker.com/get-started)。
 
