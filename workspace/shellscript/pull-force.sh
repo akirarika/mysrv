@@ -8,4 +8,4 @@
 
 git reset --hard
 
-source "./pull.sh"
+source "/shellscript/pull.sh"
