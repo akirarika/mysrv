@@ -71,6 +71,7 @@ RUN echo "Install webhook.." \
     && echo "echo \"Tested! Please run: cat /tmp/test-output.txt\"" >> /app/webhook/test.sh \
     && echo "echo \`date\` >> ./test-output.txt" >> /app/webhook/test.sh \
     && chmod -R 777 /app/webhook
+    && git config --global credential.helper store
 
 CMD ["/app/webhook/webhook", "-port", "7009", "-hotreload", "-hooks", "/app/webhook/hooks.json", "-verbose"]
 
