@@ -11,18 +11,19 @@ DIR="$( cd -P "$( dirname "$SOURCE"  )" && pwd  )"
 cd $DIR
 
 install (){
-    sudo chmod -R 777 ./*
+    su - root
+    chmod -R 777 ./*
     echo "mysrv installing..."
     echo " "
     cd /tmp
-    sudo curl -fsSL https://get.docker.com -o get-docker.sh
-    sudo sh get-docker.sh
-    sudo usermod -aG docker ${USER}
-    sudo systemctl enable docker
-    sudo systemctl start docker
-    sudo curl -L "https://github.com/docker/compose/releases/download/1.24.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-    sudo chmod +x /usr/local/bin/docker-compose
-    sudo ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
+    curl -fsSL https://get.docker.com -o get-docker.sh
+    sh get-docker.sh
+    usermod -aG docker ${USER}
+    systemctl enable docker
+    systemctl start docker
+    curl -L "https://github.com/docker/compose/releases/download/1.24.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+    chmod +x /usr/local/bin/docker-compose
+    ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
     echo " "
     echo "test your server:"
     docker -v && docker-compose -v
@@ -60,6 +61,28 @@ delete(){
     read -p "[y/N]: " i
     if [ "$i" == "y" ]; then 
         docker-compose rm --force
+    fi
+}
+
+gohome(){
+    read -p "[y/N]: " i
+    if [ "$i" == "y" ]; then 
+        docker-compose stop
+        docker-compose rm --force
+        rm -rf ./mysql/data/*
+        rm -rf ./mysql/logs/*
+        rm -rf ./gogs/data/db/*
+        rm -rf ./gogs/data/git/*
+        rm -rf ./gogs/logs/*
+        rm -rf ./caddy/logs/*
+        rm -rf ./php/logs/*
+        echo " " > ./mysql/data/.gitkeep
+        echo " " > ./mysql/logs/.gitkeep
+        echo " " > ./gogs/data/db/.gitkeep
+        echo " " > ./gogs/data/git/.gitkeep
+        echo " " > ./gogs/logs/.gitkeep
+        echo " " > ./caddy/logs/.gitkeep
+        echo " " > ./php/logs/.gitkeep
     fi
 }
 
