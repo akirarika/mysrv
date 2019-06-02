@@ -216,7 +216,7 @@ mysrv 集成了 gogs 和 webhook，要使用，请：
 
 1. 在 gogs 和 workspace 容器运行后 (webhook 是安装在 workspace 容器内的)，访问 http://localhost:3000 (gogs 的 web 管理界面) 来安装 gogs。
 
-2. 进入安装页面，选择使用 Mysql 或 Sqlite，后者较为省事，看您的喜好。之后把域名和应用 URL 中的 `localhost` 改成您此服务器的域名，其他配置项请保留默认值即可。
+2. 进入安装页面，选择使用 Mysql 或 Sqlite，后者较为省事，看您的喜好。之后把域名和应用 URL 中的 `localhost` 改成您此服务器的域名，SSH 端口改为 1022, 其他配置项请保留默认值即可。
 
 3. 在安装完成后，注册并登录一个新帐号，创建一个新项目（假设名为 demo）
 
