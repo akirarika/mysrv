@@ -40,15 +40,6 @@ RUN echo "Install Python.." \
     && ln -s /usr/bin/pip3 /usr/bin/pip \
     && apt-get clean
 
-# 安装 Php 环境
-RUN echo "Install PHP.." \
-    && apt-get install -y php php-mbstring \
-    && php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
-    && php "composer-setup.php" \
-    && php -r "unlink('composer-setup.php');" \
-    && mv composer.phar /usr/bin/composer \
-    && apt-get clean
-
 # 安装 Nodejs 环境
 RUN echo "Install Nodejs.." \
     && apt-get install -y nodejs npm yarn \
@@ -57,6 +48,15 @@ RUN echo "Install Nodejs.." \
 # 安装 Java 环境
 RUN echo "Install Java.." \
     && apt-get install -y default-jdk maven \
+    && apt-get clean
+
+# 安装 Php 环境
+RUN echo "Install PHP.." \
+    && apt-get install -y php php-bcmath php-bz2 php-calendar php-ctype php-curl php-dom php-enchant php-exif php-fileinfo php-ftp php-gd php-gettext php-gmp php-iconv php-intl php-json php-ldap php-mbstring php-mysqli php-mysqlnd php-opcache php-pdo php-phar php-posix php-pspell php-readline php-shmop php-simplexml php-snmp php-soap php-sockets php-sqlite3 php-sysvmsg php-sysvsem php-sysvshm php-wddx php-xml php-xsl \
+    && php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
+    && php "composer-setup.php" \
+    && php -r "unlink('composer-setup.php');" \
+    && mv composer.phar /usr/bin/composer \
     && apt-get clean
 
 # 安装 webhook
