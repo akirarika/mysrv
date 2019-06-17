@@ -16,6 +16,16 @@ services:
     restart: always
     command: ['--character-set-server=utf8mb4', '--collation-server=utf8mb4_unicode_ci','--default-authentication-plugin=mysql_native_password']
 
+  redis:
+    build: ./redis
+    ports:
+      - "6379:6379"
+    volumes:
+        - ./redis/data:/data
+        # - ./redis/logs:/logs
+        # - ./redis/conf:/usr/local/etc/redis:ro
+    restart: always
+    
   adminer:
     image: "adminer:latest"
     ports:
