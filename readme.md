@@ -264,7 +264,7 @@ echo '钩子成功触发了' > ./钩子成功触发了.txt
 
 ### 可视化管理您的服务器与 workspace 容器
 
-mysrv 包含 4.39 版本的 KodExplorer，启动 `kodexplorer` 容器后，您可以通过访问 `http://{您的 ip 地址或域名}:893/index.php` 来使用它。
+mysrv 包含 4.39 版本的 KodExplorer，启动 `workspace` 容器后，您可以通过访问 `http://{您的 ip 地址或域名}:893/index.php` 来使用它。
 
 默认的账号/密码为`admin/admin`，若您将它开放至公网环境，请**务必修改为其他的密码**！
 
