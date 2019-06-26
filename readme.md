@@ -1,4 +1,4 @@
-﻿# mysrv
+# mysrv
 
 mysrv 是一套基于 Docker 的通用开发环境。
 
@@ -94,9 +94,11 @@ gogs # 使用 go 语言开发的轻量级 Git 协作服务器，对配置要求�
 
 mysql # 广受好评的开源关系型数据库。它是开源且免费的，比 Oracle 更轻量和更节省成本！
 
-adminer # 单文件、只有 400kb 的数据库管理程序。
+kodexplorer # 基于 web 的可视化文件管理器，包含很多强大的功能，内置 Adminer 可用于管理数据库。
 
 php # 世界上最好的语言。
+
+redis # balabala
 
 # 更多应用程序正在计划中，也欢迎您来贡献
 ```
@@ -131,6 +133,7 @@ php # 世界上最好的语言。
 但是，请注意：请不要将 **任何作用于生产环境的代码和程序** 在此处长期运行！workspace 容器不应当有任何一个端口开放到公网环境！它应当 **仅用来开发和测试！**
 
 目前该容器中，提供的工具软件环境有：
+
 ```
 zsh
 
@@ -214,15 +217,18 @@ caddy php workspace
 
 mysrv 集成了 gogs 和 webhook，要使用，请：
 
-1. 在 gogs 和 workspace 容器运行后 (webhook 是安装在 workspace 容器内的)，访问 http://localhost:3000 (gogs 的 web 管理界面) 来安装 gogs。
+0. 在 gogs 和 workspace 容器运行后 (webhook 是安装在 workspace 容器内的)，访问 http://localhost:3000 (gogs 的 web 管理界面) 来安装 gogs。
 
-2. 进入安装页面，选择使用 Mysql 或 Sqlite，后者较为省事，看您的喜好。之后把域名和应用 URL 中的 `localhost`, 其他配置项请保留默认值即可。
+1. 进入安装页面，数据库选择使用 Mysql 或 Sqlite。
+
+2. 域名和应用 URL 中的 `localhost` 替换成您的域名或 IP 地址, 其他配置项保留默认值即可。
 
 3. 在安装完成后，注册并登录一个新帐号，创建一个新项目（假设名为 demo）
 
-4. 好了，我们暂且放一放 gogs 上面的工作，回到 mysrv 里来。打开 mysrv 中的 workspace 文件夹，编辑 hooks.json 文件 **(记得删除注释！)** ：
+4. 回到 mysrv，打开 mysrv 中的 workspace 文件夹，编辑 hooks.json 文件 **(请勿保留注释)** ：
 
 ```javascript
+
 [
     ... // 以前的内容
     ,{
@@ -234,6 +240,7 @@ mysrv 集成了 gogs 和 webhook，要使用，请：
         // 脚本将从该路径执行，一般设置为该项目的路径为佳。
     }
 ]
+
 ```
 
 5. 然后保存，我们就 webhook 创建了一个新的钩子。当有 HTTP 请求访问 `http://workspace:7009/hooks/{您刚刚设置的id}` 时，钩子所设置的脚本将被运行。
@@ -254,3 +261,19 @@ echo '钩子成功触发了' > ./钩子成功触发了.txt
 10. 在您的电脑上或者 workspace 容器内部进入代码存放目录 (不清楚?请查看前文的 "我的代码应该在哪里" 小节)，将您在 gogs 中新增的 demo 仓库 clone 下来，随便写点什么并推送。
 
 11. 推送后，查看您的代码存放目录，是否多出来了一个 "钩子成功触发了.txt" 的文件？如果是，说明您成功了。每当您的代码 Push 过后，该脚本都会执行。
+
+### 可视化管理您的服务器与 workspace 容器
+
+mysrv 包含 4.39 版本的 KodExplorer，启动 `kodexplorer` 容器后，您可以通过访问 `http://{您的 ip 地址或域名}:893/index.php` 来使用它。
+
+默认的账号/密码为`admin/admin`，若您将它开放至公网环境，请**务必修改为其他的密码**！
+
+KodExplorer 进行了少量修改，分别为：
+
+1. 开启了验证码和 csrf 保护，若您将其开放至公网环境，必须启用。
+
+2. 删除了除了 admin 以外的其他默认用户，关闭了游客访问权限。
+
+3. 升级了 adminer 插件中内置的 adminer 为 4.7.1。
+
+4. 文件管理器侧边栏的 `proj` 对应着工程目录。

@@ -73,6 +73,12 @@ RUN echo "Install webhook.." \
     && chmod -R 777 /app/webhook \
     && git config --global credential.helper store
 
-CMD ["/app/webhook/webhook", "-port", "7009", "-hotreload", "-hooks", "/app/webhook/hooks.json", "-verbose"]
+# 运行各种程序
+RUN echo "#!/bin/bash" > /app/run.sh \
+    && echo "/app/webhook/webhook -port 7009 -hotreload -hooks /app/webhook/hooks.json -verbose &" >> /app/run.sh \
+    && echo "php -S 0000:893 -t /app/kodexplorer" >> /app/run.sh \
+    && chmod -R 777 /app/run.sh
+
+CMD [ "bash", "/app/run.sh" ]
 
 WORKDIR /proj

@@ -26,25 +26,10 @@ services:
         # - ./redis/conf:/usr/local/etc/redis:ro
     restart: always
     
-  adminer:
-    image: "adminer:latest"
-    ports:
-      - "8080:8080"
-      
-  gogs:
-    links:
-      - mysql
-    build: ./gogs
-    ports:
-      - "10022:22"
-      - "3000:3000"
-    volumes:
-      - ./gogs/data/git:/data/git/gogs-repositories
-      - ./gogs/data/db:/data/gogs/data
-      - ./gogs/logs:/app/gogs/log
-    environment:
-      - "SOCAT_LINK=true"
-      - "RUN_CROND=true"
+#   adminer:
+#     image: "adminer:latest"
+#     ports:
+#       - "8080:8080"
 
   caddy:
     build: ./caddy
@@ -71,14 +56,39 @@ services:
       - ./php/logs:/var/log/php-fpm
     restart: always
     command: php-fpm
+      
+  gogs:
+    links:
+      - mysql
+    build: ./gogs
+    ports:
+      - "10022:22"
+      - "3000:3000"
+    volumes:
+      - ./gogs/data/git:/data/git/gogs-repositories
+      - ./gogs/data/db:/data/gogs/data
+      - ./gogs/logs:/app/gogs/log
+    environment:
+      - "SOCAT_LINK=true"
+      - "RUN_CROND=true"
+      
+#   kodexplorer:
+#     build: ./kodexplorer
+#     ports:
+#       - "893:893"
+#     volumes:
+#       - "./work/app:/kod"
+#     restart: "always"
 
   workspace:
     build: ./workspace
     ports:
       - "7009:7009"
+      - "893:893"
     volumes:
       - ${PROJ_PATH}:/proj
-      - ./workspace/hooks.json:/app/webhook/hooks.json
+      - ./workspace/webhook/hooks.json:/app/webhook/hooks.json
       - ./workspace/shellscript:/shellscript
+      - ./workspace/kodexplorer:/app/kodexplorer
     stdin_open: true
     tty: true
