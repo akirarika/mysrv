@@ -172,7 +172,7 @@ caddy php workspace
 
 ### mysrv 脚本
 
-根目录存在一个名为 mysrv 的 shell 脚本，它为您提供了一些封装好的快捷操作。
+根目录存在一个名为 mysrv 的 shell 脚本，它为您提供了一些封装好的快捷操作。若您在 Linux 下使用了一键安装脚本，那么本脚本会在 /usr/bin 创建一个软链接，这意味着您可以在任意位置直接输入 `mysrv {命令}` 来调用脚本。
 
 1. `mysrv` 启动并进入 Workspace 容器。
 
