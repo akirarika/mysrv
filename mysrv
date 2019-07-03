@@ -38,7 +38,8 @@ init (){
 }
 
 open (){
-    docker-compose exec $2 /bin/sh
+    echo "[RUN] docker-compose exec $1 /bin/sh"
+    docker-compose exec $1 /bin/sh
 }
 
 start(){
