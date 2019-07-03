@@ -198,9 +198,9 @@ caddy php workspace
 
 默认情况下，您的代码是在 mysrv 外层目录内的。
 
-假设您将 mysrv 放置在了 `~/MyCode/mysrv`
+假设您将 mysrv 放置在了 `~/Documents/MyCode/mysrv`
 
-那么，您的代码应该存放在 `~/MyCode`
+那么，您的代码应该存放在 `~/Documents/MyCode`
 
 假设您写了两个项目，分别是 `project1` `project2`
 
