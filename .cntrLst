@@ -1,1 +1,1 @@
-caddy gogs mysql php redis workspace
+workspace mysql redis caddy php gogs
