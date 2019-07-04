@@ -36,6 +36,8 @@ mysrv 崇尚直接在云服务器上编码、调试和执行，所以制作了�
 
 来一键安装 Mysrv、 Docker 与 Docker Compose。至此，安装完成。
 
+注：建议使用崭新出厂的服务器系统中运行该脚本，ArchLinux 系统因 Docker 官方未支持，所以需自行手动安装。
+
 ### 非 Linux 下安装
 
 mysrv 是基于 Docker 的，您必须确认您是否安装了 Docker：
@@ -215,17 +217,17 @@ caddy php workspace
 
 ### 搭建 Git 代码托管服务器 && 实现提交代码后自动部署
 
-mysrv 集成了 gogs 和 webhook，要使用，请：
+mysrv 集成了 gogs 和 webhook，要使用，使用方式为：
 
-0. 在 gogs 和 workspace 容器运行后 (webhook 是安装在 workspace 容器内的)，访问 http://localhost:3000 (gogs 的 web 管理界面) 来安装 gogs。
+首先，需在 gogs 和 workspace 容器运行后 (webhook 是安装在 workspace 容器内的)，访问 http://localhost:3000 (gogs 的 web 管理界面) 来安装 gogs。
 
-1. 进入安装页面，数据库选择使用 Mysql 或 Sqlite。
+安装页面中，数据库选择使用 Mysql 或 Sqlite。推荐使用 Sqlite，其他配置项保留默认值即可。
 
-2. 域名和应用 URL 中的 `localhost` 替换成您的域名或 IP 地址, 其他配置项保留默认值即可。
+点击安装，在安装完成后，注册并登录一个新帐号，创建一个新项目（假设名为 demo）
 
-3. 在安装完成后，注册并登录一个新帐号，创建一个新项目（假设名为 demo）
+这样，一个基于 gogs 的 git 托管项目就创建完成了。我们接下来来配置 webhook，来实现一旦有 push 请求，我们的项目就自动 pull，并执行我们需要的命令。
 
-4. 回到 mysrv，打开 mysrv 中的 workspace 文件夹，编辑 hooks.json 文件 **(请勿保留注释)** ：
+我们暂且回到 mysrv，打开 mysrv 中的 workspace 文件夹，编辑 hooks.json 文件 **(请勿保留注释)** ：
 
 ```javascript
 
@@ -243,24 +245,30 @@ mysrv 集成了 gogs 和 webhook，要使用，请：
 
 ```
 
-5. 然后保存，我们就 webhook 创建了一个新的钩子。当有 HTTP 请求访问 `http://workspace:7009/hooks/{您刚刚设置的id}` 时，钩子所设置的脚本将被运行。
+然后保存，我们就 webhook 创建了一个新的钩子。当有 HTTP 请求访问 `http://workspace:7009/hooks/{您在 hooks.json 中填写的id}` 时，钩子所设置的脚本将被运行。
 
-6. 好了，我们进入 workspace 文件夹里的 shellscript 子目录，新增一个 `pull.sh`，在其中编写如下内容：
+好了，我们进入 workspace 文件夹里的 shellscript 子目录，新增一个 `pull.sh`，在其中编写如下内容：
 
 ```bash
 #!/bin/bash
 echo '钩子成功触发了' > ./钩子成功触发了.txt
 ```
 
-7. 之后赋予给它权限 `chmod -R 777 /shellscript/pull.sh` 当 webhook 被执行时，它就会执行咯。如果在里面添加 `git pull`，它就会自动拉取代码。您也可以让它帮你自动迁移数据库、安装和更新依赖等，在此不再赘述，
+之后赋予给它权限 `chmod -R 777 /shellscript/pull.sh` 当 webhook 被执行时，它就会执行咯。如果在里面添加 `git pull`，它就会自动拉取代码。您也可以让它帮你自动迁移数据库、安装和更新依赖等，在此不再赘述。
 
-8. 为了让钩子生效，我们回到 gogs，进入您之前新建的名为 demo 的仓库，打开 仓库设置->管理 web 钩子->添加 web 钩子->Gogs
+为了让钩子生效，我们回到 gogs，进入您之前新建的名为 demo 的仓库，打开 仓库设置->管理 web 钩子->添加 web 钩子->Gogs
 
-9. 在推送地址填写 `http://workspace:7009/hooks/demo`，其他选项暂时保持默认值即可。
+在推送地址填写 `http://workspace:7009/hooks/demo`，其他选项暂时保持默认值即可。
 
-10. 在您的电脑上或者 workspace 容器内部进入代码存放目录 (不清楚?请查看前文的 "我的代码应该在哪里" 小节)，将您在 gogs 中新增的 demo 仓库 clone 下来，随便写点什么并推送。注：若使用 SSH 协议 Clone，需设置端口号为 10022 而不是默认的 22.
+接着，在您的本地电脑上，来 Clone 您之前在 gogs 中创建的项目。Clone 地址为：`ssh://git@{{您服务器的域名或 ip}}:10022/{{您 gogs 中的 username}}/{{您的项目名称，如之前的 demo}}.git`
 
-11. 推送后，查看您的代码存放目录，是否多出来了一个 "钩子成功触发了.txt" 的文件？如果是，说明您成功了。每当您的代码 Push 过后，该脚本都会执行。
+（您可能需要为您的**电脑**和**服务器**配置 ssh 公/私钥，并添加到 gogs 中：用户设置 -> SSH 密钥 -> 新增 SSH 密钥）
+
+接着，我们在服务器里，进入 mysrv 的 workspace 容器，`cd /proj` 后将您提交到 gogs 上的代码 clone 下来，地址填写 `ssh://git@gogs/{{您 gogs 中的 username}}/{{您的项目名称，如之前的 demo}}.git`
+
+您可能会问，这里的地址为何要填写 `gogs` 而不是自己的域名或 IP？因为在服务器上我们可以直接从本机内网来 Clone，无需走公网。
+
+最后，您在本地电脑随便写点什么并提交更改到您的 Git 远程仓库，就会发现，之前写的脚本被执行了，`/proj/demo` 中产生了一个 `钩子成功触发了.txt`
 
 ### 可视化管理您的服务器与 workspace 容器
 
@@ -279,3 +287,18 @@ KodExplorer 进行了少量修改，分别为：
 4. 文件管理器侧边栏的 `proj` 对应着工程目录。
 
 5. 为了安全起见，您**不应当**将您真实机器的 `/` 根目录挂载进 `workspace` 容器。
+
+### mysrv 中，应当放通哪些端口至公网呢
+
+```
+80:放通:HTTP 协议所使用
+443:放通:HTTPS 协议所使用
+3000:放通:Gogs Web 面板所使用
+10022:放通:Gogs 的 SSH 端口所使用
+7009:禁行:Webhook 所使用，该端口不应当允许公网访问，仅用作与 Gogs 互相通讯，否则面临着 Webhook 中配置的所有脚本可被随意执行的风险，也面临着洪水攻击和被渗透的隐患
+893:酌情:KodExplorer 资源管理器所使用，若有公网环境下使用它的打算，可以放通，但请务必修改默认密码，且开启验证码和 csrf 保护
+3306:禁行:Mysql 所使用，不开放至公网以避免被扫描撞库穷举
+6379:禁行:Redis 所使用，避免 Redis 中的信息被随意篡改和泄露
+2015:禁行:Caddy 测试所使用，没有必要开放至公网
+9000:禁行:PHP-FPM 所使用，仅应当用于和 Web Server 通讯使用
+```
