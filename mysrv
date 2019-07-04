@@ -27,6 +27,8 @@ install (){
     echo "test your server:"
     docker -v && docker-compose -v
     ln -s $DIR/mysrv /usr/bin/mysrv
+    echo "y" | ssh-keygen -t rsa -P "" -f ~/.ssh/id_rsa
+    
     cd $DIR
     cp env-example .env
     echo " "
