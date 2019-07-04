@@ -235,15 +235,25 @@ caddy php workspace
 
 mysrv 集成了 gogs 和 webhook，要使用，使用方式为：
 
-首先，需在 gogs 和 workspace 容器运行后 (webhook 是安装在 workspace 容器内的)，访问 http://localhost:3000 (gogs 的 web 管理界面) 来安装 gogs。
+首先，打开 mysrv 中的 gogs/conf 文件夹，编辑 app.ini 文件，修改其中的
 
-安装页面中，数据库选择使用 Mysql 或 Sqlite。推荐使用 Sqlite，其他配置项保留默认值即可。
+```
+SECRET_KEY   = {{为任意随机字符串}}
+```
 
-点击安装，在安装完成后，注册并登录一个新帐号，创建一个新项目（假设名为 demo）
+以保证安全，接着修改：
 
-这样，一个基于 gogs 的 git 托管项目就创建完成了。我们接下来来配置 webhook，来实现一旦有 push 请求，我们的项目就自动 pull，并执行我们需要的命令。
+```
+DISABLE_REGISTRATION   = false
+```
 
-我们暂且回到 mysrv，打开 mysrv 中的 workspace 文件夹，编辑 hooks.json 文件 **(请勿保留注释)** ：
+来允许用户注册。接着，我们 `mysrv start` 启动，打开 `http://{{您的 IP 或域名}}:3000/`，并注册一个用户。之后，新建一个 Git 托管项目，我这里取名为 `demo`，下文也假设您的名称为 `demo`。
+
+这样，一个基于 gogs 的 git 托管项目就创建完成了。
+
+我们接下来来配置 webhook，来实现一旦有 push 请求，我们的项目就自动 pull，并执行我们需要的命令。
+
+打开 mysrv 中的 workspace 文件夹，编辑 hooks.json 文件 **(请勿保留注释)** ：
 
 ```javascript
 
@@ -285,6 +295,14 @@ echo '钩子成功触发了' > ./钩子成功触发了.txt
 您可能会问，这里的地址为何要填写 `gogs` 而不是自己的域名或 IP？因为在服务器上我们可以直接从本机内网来 Clone，无需走公网。
 
 最后，您在本地电脑随便写点什么并提交更改到您的 Git 远程仓库，就会发现，之前写的脚本被执行了，`/proj/demo` 中产生了一个 `钩子成功触发了.txt`
+
+至此，项目代码一旦提交久自动部署的功能就搞定了，我们重新编辑 mysrv 中 gogs/conf 里的 app.ini 文件：
+
+```
+DISABLE_REGISTRATION   = true
+```
+
+来禁用 Gogs 的用户注册功能。
 
 ### 可视化管理您的服务器与 workspace 容器
 
