@@ -60,6 +60,7 @@ restart(){
 delete(){
     read -p "[y/N]: " i
     if [ "$i" == "y" ]; then 
+        docker stop $(docker ps -aq)
         docker-compose rm --force
     fi
 }
