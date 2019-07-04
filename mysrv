@@ -45,7 +45,7 @@ open (){
 }
 
 start(){
-    echo "[RUN] docker-compose up --detach `cat .cntrLst`"
+    echo "[RUN] docker-compose up --detach --build `cat .cntrLst`"
     docker-compose up --detach `cat .cntrLst`
 }
 
