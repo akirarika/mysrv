@@ -87,6 +87,7 @@ services:
       - "893:893"
     volumes:
       - ${PROJ_PATH}:/proj
+      - /root/.ssh:/root/.ssh
       - ./workspace/webhook/hooks.json:/app/webhook/hooks.json
       - ./workspace/webhook/shellscript:/shellscript
       - ./workspace/kodexplorer:/app/kodexplorer
