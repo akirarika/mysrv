@@ -71,6 +71,8 @@ RUN echo "Install webhook.." \
     && echo "echo \"Tested! Please run: cat /tmp/test-output.txt\"" >> /app/webhook/test.sh \
     && echo "echo \`date\` >> ./test-output.txt" >> /app/webhook/test.sh \
     && chmod -R 777 /app/webhook \
+    && git config --global user.email "mysrv@mysrv.com" \
+    && git config --global user.name "mysrv" \
     && git config --global credential.helper store
 
 # 运行各种程序
