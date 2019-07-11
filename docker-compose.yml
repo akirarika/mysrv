@@ -25,11 +25,6 @@ services:
         # - ./redis/logs:/logs
         # - ./redis/conf:/usr/local/etc/redis:ro
     restart: always
-    
-#   adminer:
-#     image: "adminer:latest"
-#     ports:
-#       - "8080:8080"
 
   caddy:
     build: ./caddy
@@ -72,25 +67,32 @@ services:
     environment:
       - "SOCAT_LINK=true"
       - "RUN_CROND=true"
-      
-#   kodexplorer:
-#     build: ./kodexplorer
-#     ports:
-#       - "893:893"
-#     volumes:
-#       - "./work/app:/kod"
-#     restart: "always"
 
   workspace:
     build: ./workspace
     ports:
-      - "7009:7009"
-      - "893:893"
+      - "7009:7009" # webhook
+      - "893:893" # kodExplorer
+      - "8443:8443" # vscoder
+      # 开放常用端口便于开发调试
+      - "50003:3"
+      - "50020:20"
+      - "50021:21"
+      - "50022:22"
+      - "50080:80"
+      - "50081:81"
+      - "50443:443"
+      - "58000:8000"
+      - "58080:8080"
+      - "58081:8081"
     volumes:
       - ${PROJ_PATH}:/proj
       - /root/.ssh:/root/.ssh
+      - ./workspace/kodexplorer:/app/kodexplorer
       - ./workspace/webhook/hooks.json:/app/webhook/hooks.json
       - ./workspace/webhook/shellscript:/shellscript
-      - ./workspace/kodexplorer:/app/kodexplorer
-    stdin_open: true
+      - ./workspace/code-server/expansions:/app/code-server/expansions
+      - ./workspace/code-server/home:/app/code-server/home
+      - ./workspace/code-server/password:/app/code-server/password
+    command: [ "/bin/bash", "/app/run.sh" ]
     tty: true

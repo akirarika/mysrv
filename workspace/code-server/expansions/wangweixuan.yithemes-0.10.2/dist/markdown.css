@@ -1,0 +1,54 @@
+.vscode-dark { color: hsl(220, 13%, 66%); }
+.vscode-light { color: hsl(230, 1%, 26%); }
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+  border-color: hsl(220, 13%, 22%);
+}
+.vscode-light.showEditorSelection .code-active-line:before {
+  border-color: hsl(0, 0%, 100%);
+}
+.vscode-dark.showEditorSelection .code-line:hover:before,
+.vscode-light.showEditorSelection .code-line:hover:before { border: none; }
+
+h1 { border: none; }
+.vscode-dark h1, .vscode-dark h2, .vscode-dark h3, .vscode-dark h4,
+.vscode-dark h5, .vscode-dark h6 { color: hsl(220, 13%, 86%); }
+.vscode-light h1, .vscode-light h2, .vscode-light h3, .vscode-light h4,
+.vscode-light h5, .vscode-light h6 { color: hsl(230, 1%, 14%); }
+
+.vscode-dark strong { color: hsl(220, 13%, 86%); }
+.vscode-dark s { color: hsla(220, 13%, 66%, 0.6); }
+.vscode-light strong { color: hsl(230, 1%, 14%); }
+.vscode-light s { color: hsl(230, 1%, 56%); }
+
+.vscode-dark a:hover, .vscode-dark a code { color: rgb(82, 139, 255); }
+.vscode-light a:hover, .vscode-light a code { color: #556de8; }
+a:focus, input:focus, select:focus, textarea:focus { outline: none; }
+
+.vscode-dark blockquote {
+  background: none;
+  color: hsla(220, 13%, 66%, 0.6);
+  border-color: hsla(220, 13%, 66%, 0.6);
+}
+.vscode-light blockquote {
+  background: none;
+  color: hsl(230, 1%, 56%);
+  border-color: hsl(230, 1%, 56%);
+}
+
+.vscode-dark hr { border: dashed hsla(220, 13%, 66%, 0.6); }
+.vscode-light hr { border: dashed hsl(230, 1%, 56%); }
+
+.vscode-dark th { color: hsl(220, 13%, 86%); }
+.vscode-light th { color: hsl(230, 1%, 14%); }
+.vscode-dark th, .vscode-dark td { border-color: hsla(220, 13%, 66%, 0.6); }
+.vscode-light th, .vscode-light td { border-color: hsl(230, 1%, 56%); }
+
+.vscode-dark code {
+  color: hsl(220, 13%, 86%);
+  background-color: hsl(220, 13%, 28%);
+}
+.vscode-light code {
+  color: hsl(230, 1%, 14%);
+  background-color: hsl(230, 1%, 90%);
+}

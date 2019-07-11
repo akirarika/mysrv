@@ -1,0 +1,38 @@
+{
+	"name": "theme-atom-one-light",
+	"displayName": "Atom One Light Theme",
+	"description": "One Light Theme based on Atom",
+	"version": "0.2.4",
+	"publisher": "b4456609",
+	"engines": {
+		"vscode": "^1.5.0"
+	},
+	"categories": [
+		"Themes"
+	],
+	"keywords": [
+		"atom",
+		"theme",
+		"light",
+		"one light"
+	],
+	"contributes": {
+		"themes": [
+			{
+				"label": "Atom One Light",
+				"uiTheme": "vs",
+				"path": "./themes/atomOneLight.tmTheme"
+			}
+		]
+	},
+	"homepage": "https://github.com/b4456609/vscode-atom-one-light",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/b4456609/vscode-atom-one-light"
+	},
+	"__metadata": {
+		"id": "b4456609.theme-atom-one-light",
+		"publisherId": "b4456609",
+		"publisherDisplayName": "b4456609"
+	}
+}

@@ -1,6 +1,6 @@
 # mysrv
 
-mysrv 是一套基于 Docker 的通用开发环境。
+mysrv 是一套自用的，基于 Docker 的通用开发环境。
 
 它可以用来：
 
@@ -31,12 +31,12 @@ mysrv 崇尚直接在云服务器上编码、调试和执行，所以制作了�
 
 ```sh
 ./mysrv install
-# 需要 Root 权限，系统必须安装有 `curl`
+# 需要以 Root 用户运行，系统必须安装有 `curl`
 ```
 
 来一键安装 Mysrv、 Docker 与 Docker Compose。至此，安装完成。
 
-注：建议使用崭新出厂的服务器系统中运行该脚本，ArchLinux 系统因 Docker 官方未支持，所以需自行手动安装。
+注：建议使用崭新出厂的服务器系统中运行该脚本，ArchLinux 系统因 Docker 官方未支持，所以需自行手动安装。虽然我使用 ArchLinux，但是我的服务器是 CentOS，所以建议使用 CentOS 来运行以避免环境不一致造成的问题 (尽管这几乎不可能发生)。
 
 ### 非 Linux 下安装
 
@@ -304,9 +304,23 @@ DISABLE_REGISTRATION   = true
 
 来禁用 Gogs 的用户注册功能。
 
-### 可视化管理您的服务器与 workspace 容器
+## 在线开发调试 && 在线可视化管理文件/拖拽式文件上传
 
-mysrv 包含 4.39 版本的 KodExplorer，启动 `workspace` 容器后，您可以通过访问 `http://{您的 ip 地址或域名}:893/index.php` 来使用它。
+Workspace 容器中，安装了 `VSCode Server` 与 `KodExplorer`，以实现在线开发调试和在线可视化管理文件/拖拽式文件上传。
+
+### VSCode Server
+
+使用方式：`http://{您的 ip 地址或域名}:8443/`
+
+初次登录时需要输入密码，默认密码为 `yourCdrPassword`，若您将它开放至公网环境，请**务必修改为其他的密码**！
+
+程序默认安装了一些扩展，不再列出，请自行查看。若您身处中国大陆，可能无法访问 VSCode Server 的扩展商店。
+
+修改默认密码请编辑 `workspace/code-server/password`，之所以使用文件而不使用 .env 或环境变量，是考虑到您可能需要实现动态密码的功能。
+
+### KodExplorer
+
+使用方式：`http://{您的 ip 地址或域名}:893/index.php`
 
 默认的账号/密码为`admin/admin`，若您将它开放至公网环境，请**务必修改为其他的密码**！
 
@@ -331,6 +345,7 @@ KodExplorer 进行了少量修改，分别为：
 10022:放通:Gogs 的 SSH 端口所使用
 7009:禁行:Webhook 所使用，该端口不应当允许公网访问，仅用作与 Gogs 互相通讯，否则面临着 Webhook 中配置的所有脚本可被随意执行的风险，也面临着洪水攻击和被渗透的隐患
 893:酌情:KodExplorer 资源管理器所使用，若有公网环境下使用它的打算，可以放通，但请务必修改默认密码，且开启验证码和 csrf 保护
+8443:酌情:VSCodeServer 所使用，若有公网环境下使用它的打算，可以放通，但请务必修改默认密码
 3306:禁行:Mysql 所使用，不开放至公网以避免被扫描撞库穷举
 6379:禁行:Redis 所使用，避免 Redis 中的信息被随意篡改和泄露
 2015:禁行:Caddy 测试所使用，没有必要开放至公网

@@ -15,9 +15,16 @@ mysql/data/*
 mysql/logs/*
 !mysql/logs/.gitkeep
 
-
 php/logs/*
 !php/logs/.gitkeep
+
+redis/data/*
+!redis/data/.gitkeep
+
+#workspace/code-server/expansions/*
+#!workspace/code-server/expansions/.gitkeep
+workspace/code-server/home/*
+!workspace/code-server/home/.gitkeep
 
 .DS_Store
 .env

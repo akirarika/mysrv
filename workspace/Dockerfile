@@ -10,8 +10,8 @@ RUN echo "Init workspace.." \
     && echo "Asia/Shanghai" > /etc/timezone \
     && export DEBIAN_FRONTEND=noninteractive \
     && apt-get update \
-    # 安装实用工具包
-    && apt-get install -y wget curl vim nano zip git tzdata \
+    # 安装实用工具包和依赖
+    && apt-get install -y wget curl vim nano zip git tzdata openssl net-tools locales sudo dumb-init \
     && mkdir "/app" \
     && apt-get clean
 
@@ -66,7 +66,6 @@ RUN echo "Install webhook.." \
     && tar -zxvf webhook-linux-amd64.tar.gz \
     && mv /app/webhook-linux-amd64 /app/webhook \
     && rm -rf /app/webhook-linux-amd64.tar.gz \
-    # && echo "[{\"id\":\"test\",\"execute-command\":\"/app/webhook/test.sh\",\"command-working-directory\":\"/tmp\"}]" > /app/webhook/hooks.json \
     && echo "#!/bin/bash" > /app/webhook/test.sh \
     && echo "echo \"Tested! Please run: cat /tmp/test-output.txt\"" >> /app/webhook/test.sh \
     && echo "echo \`date\` >> ./test-output.txt" >> /app/webhook/test.sh \
@@ -75,12 +74,20 @@ RUN echo "Install webhook.." \
     && git config --global user.name "mysrv" \
     && git config --global credential.helper store
 
+# 安装 Code Server
+RUN echo "Install Code Server.." \
+    && cd "/app" \
+    && wget "https://github.com/cdr/code-server/releases/download/1.1156-vsc1.33.1/code-server1.1156-vsc1.33.1-linux-x64.tar.gz" \
+    && tar -zxvf code-server1.1156-vsc1.33.1-linux-x64.tar.gz \
+    && mv /app/code-server1.1156-vsc1.33.1-linux-x64 /app/code-server \
+    && rm -rf /app/code-server1.1156-vsc1.33.1-linux-x64.tar.gz \
+    && chmod -R 777 /app/code-server
+
 # 运行各种程序
 RUN echo "#!/bin/bash" > /app/run.sh \
+    && echo "php -S 0000:893 -t /app/kodexplorer &" >> /app/run.sh \
     && echo "/app/webhook/webhook -port 7009 -hotreload -hooks /app/webhook/hooks.json -verbose &" >> /app/run.sh \
-    && echo "php -S 0000:893 -t /app/kodexplorer" >> /app/run.sh \
-    && chmod -R 777 /app/run.sh
-
-CMD [ "bash", "/app/run.sh" ]
+    && echo "/app/code-server/code-server /proj -e /app/code-server/expansions -d /app/code-server/home --password \`cat /app/code-server/password\` --disable-telemetry" >> /app/run.sh \
+    && chmod -R 700 /app/run.sh
 
 WORKDIR /proj

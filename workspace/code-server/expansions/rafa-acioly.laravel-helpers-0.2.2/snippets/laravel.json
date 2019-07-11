@@ -1,0 +1,424 @@
+{
+	"array add": {
+			"prefix": "array_add",
+			"body": "array_add(${1:array},${2:array})",
+			"description": "Adds a given key/value pair to the array if the given key doesn't already exist in the array."
+	},
+	"array collapse": {
+		"prefix": "array_collapse",
+		"body": "array_collapse(${1:array}, ${2:array})",
+		"description": "Collapses an array of arrays into a single array."
+	},
+	"array divide": {
+		"prefix": "array_divide",
+		"body": "array_divide(${1:array})",
+		"description": "Returns two arrays, one containing the keys, and the other containing the values of the original array."
+	},
+	"array dot": {
+		"prefix": "array_dot",
+		"body": "array_dot(${1:array})",
+		"description": "Flattens a multi-dimensional array into a single level array that uses \"dot\" notation to indicate dept."
+	},
+	"array except": {
+		"prefix": "array_except",
+		"body": "array_except(${1:array}, ${2:array})",
+		"description": "Removes the given key/value pairs from the array."
+	},
+	"array first": {
+		"prefix": "array_first",
+		"body": "array_first(${1:array}, function(${2:\\$value}, ${3:\\$key}){${4}})",
+		"description": "Returns the first element of an array passing a given truth test."
+	},
+	"array flatten": {
+		"prefix": "array_flatten",
+		"body": "array_flatten(${1:array})",
+		"description": "Will flatten a multi-dimensional array into a single level."
+	},
+	"array forget": {
+		"prefix": "array_forget",
+		"body": "array_forget(${1:array}, ${2:string})",
+		"description": "Removes a given key / value pair from a deeply nested array using \"dot\" notation."
+	},
+	"array get": {
+		"prefix": "array_get",
+		"body": "array_get(${1:array}, ${2:string}, ${3:default})",
+		"description": "retrieves a value from a deeply nested array using \"dot\" notation."
+	},
+	"array has": {
+		"prefix": "array_has",
+		"body": "array_has(${1:array}, ${2:string})",
+		"description": "Checks that a given item exists in an array using \"dot\" notation."
+	},
+	"array last": {
+		"prefix": "array_last",
+		"body": "array_last(${1:array}, function(${2:\\$value}, ${3:\\$key}){${4}})",
+		"description": "Returns the last element of an array passing a given truth test."
+	},
+	"array only": {
+		"prefix": "array_only",
+		"body": "array_only(${1:array}, ${2:array})",
+		"description": "Will return only the specified key / value pairs from the given array."
+	},
+	"array pluck": {
+		"prefix": "array_pluck",
+		"body": "array_pluck(${1:array}, ${2:string})",
+		"description": "Will pluck a list of the given key / value pairs from the array."
+	},
+	"array prepend": {
+		"prefix": "array_prepend",
+		"body": "array_prepend(${1:array}, '${2:value}')",
+		"description": "Will push an item onto the beginning of an array."
+	},
+	"array pull": {
+		"prefix": "array_pull",
+		"body": "array_pull(${1:array}, '${2:value}')",
+		"description": "Function returns and removes a key / value pair from the array."
+	},
+	"array set": {
+		"prefix": "array_set",
+		"body": "array_set(${1:array}, '${2:string}', ${4:value})",
+		"description": "Sets a value within a deeply nested array using \"dot\" notation."
+	},
+	"array sort": {
+		"prefix": "array_sort",
+		"body": "array_sort(${1:array}, function(${2:\\$key}, ${3:\\$value}}){${4})",
+		"description": "Sorts the array by the results of the given Closure."
+	},
+	"array sort recursive": {
+		"prefix": "array_sort_recursive",
+		"body": "array_sort_recursive(${1:array})",
+		"description": "Recursively sorts the array using the sort function."
+	},
+	"array where": {
+		"prefix": "array_where",
+		"body": "array_where(${1:array}, function(${2:\\$key}, ${3:\\$value}){${4}})",
+		"description": "Filters the array using the given Closure."
+	},
+	"array wrap": {
+		"prefix": "array_wrap",
+		"body": "array_wrap(${1:string})",
+		"description": "will wrap the given value in an array. If the given value is already an array it will not be changed"
+	},
+	"head": {
+			"prefix": "head",
+			"body": "head(${1:array})",
+			"description": "Simply returns the first element in the given array."
+	},
+	"last": {
+			"prefix": "last",
+			"body": "last(${1:array})",
+			"description": "Returns the last element in the given array."
+	},
+
+	// Paths
+	"app path": {
+		"prefix": "app_path",
+		"body": "app_path('${1:string}')",
+		"description": "Returns the fully qualified path to the app directory."
+	},
+	"base path": {
+		"prefix": "base_path",
+		"body": "base_path('${1:string}')",
+		"description": "Returns the fully qualified path to the project root."
+	},
+	"config path": {
+		"prefix": "config_path",
+		"body": "config_path('${1}')",
+		"description": "Returns the fully qualified path to the application configuration directory."
+	},
+	"database path": {
+		"prefix": "database_path",
+		"body": "database_path('${1}')",
+		"description": "Returns the fully qualified path to the application's database."
+	},
+	"mix": {
+		"prefix": "mix",
+		"body": "mix('${1:file}')",
+		"description": "The mix function gets the path to a versioned Mix file"
+	},
+	"public path": {
+		"prefix": "public_path",
+		"body": "public_path('${1}')",
+		"description": "Returns the fully qualified path to the public directory."
+	},
+	"resource path": {
+		"prefix": "resource_path",
+		"body": "resource_path('${1}')",
+		"description": "Returns the fully qualified path to the resources directory."
+	},
+	"storage path": {
+		"prefix": "storage_path",
+		"body": "storage_path('${1}')",
+		"description": "Returns the fully qualified path to the storage directory."
+	},
+
+	// Strings
+	"camel case": {
+		"prefix": "camel_case",
+		"body": "camel_case('${1:string}')",
+		"description": "Converts the given string to camelCase."
+	},
+	"class basename": {
+		"prefix": "class_basename",
+		"body": "class_basename('${1:string}')",
+		"description": "returns the class name of the given class with the class' namespace remove."
+	},
+	"e": {
+		"prefix": "_e",
+		"body": "e('${1}')",
+		"description": "Runs htmlentities over the given string."
+	},
+	"ends with": {
+		"prefix": "ends_with",
+		"body": "ends_with('${1:haystack}', ${2:needle})",
+		"description": "Determines if the given string ends with the given value."
+	},
+	"snake case": {
+		"prefix": "snake_case",
+		"body": "snake_case('${1:string}')",
+		"description": "Converts the given string to snake case."
+	},
+	"kebab case": {
+		"prefix": "kebab_case",
+		"body": "kebab_case(${1:string})",
+		"description": "The kebab_case function converts the given string to kebab-case"
+	},
+	"str limit": {
+		"prefix": "str_limit",
+		"body": "str_limit('${1:string}', ${2:limit})",
+		"description": "Limits the number of characters in a string."
+	},
+	"starts with": {
+		"prefix": "starts_with",
+		"body": "starts_with('${1:haystack}', '${2:needle}')",
+		"description": "Determines if the given string begins with the given value."
+	},
+	"str after": {
+		"prefix": "str_after",
+		"body": "str_after('${1:haystack}', '${2:needle}')",
+		"description": "Returns everything after the given value in a string"
+	},
+	"str contains": {
+		"prefix": "str_contains",
+		"body": "str_contains('${1:haystack}', '${2:needle}')",
+		"description": "Determines if the given string contains the given value."
+	},
+	"str finish": {
+		"prefix": "str_finish",
+		"body": "str_finish('${1:string}', '${2:value}')",
+		"description": "Adds a single instance of the given value to a string."
+	},
+	"str is": {
+		"prefix": "str_is",
+		"body": "str_is('${1:hatstack}', '${2:needle}')",
+		"description": "Determines if a given string matches a given pattern. Asterisks may be used to indicate wildcards."
+	},
+	"str plural": {
+		"prefix": "str_plural",
+		"body": "str_plural('${1:string}', ${2:1 for plural 2 for singular})",
+		"description": "Converts a string to its plural form. (only English language)"
+	},
+	"str random": {
+		"prefix": "str_random",
+		"body": "str_random(${1:integer})",
+		"description": "Generates a random string of the specified length."
+	},
+	"str singular": {
+		"prefix": "str_singular",
+		"body": "str_singular('${1:string}')",
+		"description": "Converts a string to its singular form. (only English language)"
+	},
+	"str slug": {
+		"prefix": "str_slug",
+		"body": "str_slug('${1:string}', '${2:-}')",
+		"description": "Generates a URL friendly \"slug\" from the given string."
+	},
+	"studly case": {
+		"prefix": "str_case",
+		"body": "studly_case('${1:string}')",
+		"description": "Converts the given string to StudlyCase."
+	},
+	"title case": {
+		"prefix": "title_case",
+		"body": "title_case('${1:string}')",
+		"description": "Converts the given string to Title Case."
+	},
+	"trans": {
+		"prefix": "trans",
+		"body": "trans('${1:string}')",
+		"description": "Translates the given language line using your localization files."
+	},
+	"trans choice": {
+		"prefix": "trans_choice",
+		"body": "trans_choice('${1:string}', ${2:count})",
+		"description": "Translates the given language line with inflection."
+	},
+
+	// URLs
+	"action": {
+		"prefix": "action",
+		"body": "action('${1:Controller}@${2:method}')",
+		"description": "Generates a URL for the given controller action."
+	},
+	"asset": {
+		"prefix": "asset",
+		"body": "asset('${1:string}')",
+		"description": "Generate a URL for an asset using the current scheme of the request."
+	},
+	"secure asset": {
+		"prefix": "secure_asset",
+		"body": "secure_asset('${1:string}', ${2:$title}, ${3:array})",
+		"description": "Generate a URL for an asset using HTTPS."
+	},
+	"route": {
+		"prefix": "route",
+		"body": "route('${1:routeName}', ${2:array})",
+		"description": "Generates a URL for the given named route."
+	},
+	"secure url": {
+		"prefix": "secure_url",
+		"body": "secure_url('${1:routeName}', ${2:array})",
+		"description": "Generates a URL for the given named route."
+	},
+	"url": {
+		"prefix": "url",
+		"body": "url('${1:string}', ${2:array})",
+		"description": "Generates a fully qualified HTTPS URL to the given path."
+	},
+
+	"abort": {
+		"prefix": "abort",
+		"body": "abort(${1:HTTP code}, ${2:message})",
+		"description": "Throws a HTTP exception which will be rendered by the exception handler."
+	},
+	"abort if": {
+		"prefix": "abort_if",
+		"body": "abort_if(${1:validation}, ${2:HTTP code})",
+		"description": "Throws an HTTP exception if a given boolean expression evaluates to true."
+	},
+	"abort unless": {
+		"prefix": "abort_unless",
+		"body": "abort_unless(${1:validation}, ${2:HTTP code})",
+		"description": "Throws an HTTP exception if a given boolean expression evaluates to false."
+	},
+	"auth": {
+		"prefix": "auth",
+		"body": "auth()->user()",
+		"description": "Returns an authenticator instance."
+	},
+	"back": {
+		"prefix": "back",
+		"body": "back()",
+		"description": "Generates a redirect response to the user's previous location."
+	},
+	"bcrypt": {
+		"prefix": "bcrypt",
+		"body": "bcrypt('${1:my-secret-password')",
+		"description": "Hashes the given value using Bcrypt."
+	},
+	"cache": {
+		"prefix": "cache",
+		"body": "cache('${1:key}', '${2:value}')",
+		"description": "Function may be used to get values from the cache. If the given key does not exist in the cache, an optional default value will be returned"
+	},
+	"collect": {
+		"prefix": "collect",
+		"body": "collect(${1:array})",
+		"description": "Creates a collection instance from the given array."
+	},
+	"config": {
+		"prefix": "config",
+		"body": "config(${1:string})",
+		"description": "Gets the value of a configuration variable."
+	},
+	"csrf field": {
+		"prefix": "csrf_field",
+		"body": "csrf_field()",
+		"description": "Generates an HTML hidden input field containing the value of the CSRF token."
+	},
+	"csrf token": {
+		"prefix": "csrf_token",
+		"body": "csrf_token()",
+		"description": "Retrieves the value of the current CSRF token."
+	},
+	"dd": {
+		"prefix": "dd",
+		"body": "dd(${1:value)}",
+		"description": "Dumps the given variables and ends execution of the script."
+	},
+	"dispatch": {
+		"prefix": "dispatch",
+		"body": "dispatch(${1:new App\\Jobs\\SendEmails})",
+		"description": "Pushes a new job onto the Laravel job queue."
+	},
+	"env": {
+		"prefix": "env",
+		"body": "env(${1:APP_ENV}, '${2:production}')",
+		"description": "Gets the value of an environment variable or returns a default value."
+	},
+	"event": {
+		"prefix": "event",
+		"body": "event(${1:new UserRegistered($user)})",
+		"description": "Dispatches the given event to its listeners."
+	},
+	"factory": {
+		"prefix": "factory",
+		"body": "factory(${1:App\\User::class})${2:->make()}",
+		"description": "Creates a model factory builder for a given class, name, and amount."
+	},
+	"info": {
+		"prefix": "info",
+		"body": "info(${1:string}, ${2:array})",
+		"description": "Will write information to the log."
+	},
+	"logger": {
+		"prefix": "logger",
+		"body": "logger(${1:string}, ${2:array})",
+		"description": "Can be used to write a debug level message to the log."
+	},
+	"method field": {
+		"prefix": "method_field",
+		"body": "method_field(${1:string})",
+		"description": "Generates an HTML hidden input field containing the spoofed value of the form's HTTP verb."
+	},
+	"old": {
+		"prefix": "old",
+		"body": "old(${1:value}, ${2:default})",
+		"description": "Retrieves an old input value flashed into the session."
+	},
+	"redirect": {
+		"prefix": "redirect",
+		"body": "redirect(${1:string})${2:->route()}",
+		"description": "Returns a redirect HTTP response, or returns the redirector instance if called with no arguments."
+	},
+	"request": {
+		"prefix": "request",
+		"body": "request(${1:key}, ${2:$default = null})",
+		"description": "Returns the current request instance or obtains an input item."
+	},
+	"response": {
+		"prefix": "response",
+		"body": "response(${1:Hello world}, ${2:HTTP code}, ${3:$headers})",
+		"description": "Creates a response instance or obtains an instance of the response factory."
+	},
+	"retry": {
+		"prefix": "retry",
+		"body": "retry(${1:integer}, function(${2:\\$key}, ${3:\\$value}){${4}}))",
+		"description": "attempts to execute the given callback until the given maximum attempt threshold is met. If the callback does not throw an exception, it's return value will be returned. If the callback throws an exception, it will automatically be retried. If the maximum attempt count is exceeded, the exception will be thrown."
+	},
+	"session": {
+		"prefix": "session",
+		"body": "sesion(${1:key})",
+		"description": "May be used to get or set session values."
+	},
+	"value": {
+		"prefix": "value",
+		"body": "value(${1:callback})",
+		"description": "Will simply return the value it is given."
+	},
+	"view": {
+		"prefix": "view",
+		"body": "view(${1:string})",
+		"description": "Retrieves a view instance."
+	}
+}

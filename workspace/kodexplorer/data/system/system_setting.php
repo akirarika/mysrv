@@ -24,7 +24,7 @@
             "url": "index.php%3Fdesktop",
             "target": "0",
             "subMenu": "0",
-            "use": "1",
+            "use": "0",
             "type": ""
         },
         {
@@ -40,7 +40,7 @@
             "url": "index.php%3Feditor",
             "target": "0",
             "subMenu": "0",
-            "use": "1",
+            "use": "0",
             "type": ""
         }
     ],
