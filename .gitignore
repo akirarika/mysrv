@@ -25,6 +25,10 @@ redis/data/*
 #!workspace/code-server/expansions/.gitkeep
 workspace/code-server/home/*
 !workspace/code-server/home/.gitkeep
+!workspace/code-server/home/User
+workspace/code-server/home/User/*
+!workspace/code-server/home/User/settings.json
+!workspace/code-server/home/User/locale.json
 
 .DS_Store
 .env
