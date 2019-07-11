@@ -8,9 +8,9 @@ mysrv 是一套基于 Docker 的通用开发环境，为满足自己需求而制
 
 2. 一键部署至您的云服务器，为服务器搭建好可用作生产的环境，且系统和各个应用之间都相互隔离。
 
-3. 利用 mysrv 中整合的 [gogs](https://github.com/gogs/gogs) 和 [webhook](https://github.com/adnanh/webhook) 实现代码备份同步和自动部署。
+3. 利用 [gogs](https://github.com/gogs/gogs) 和 [webhook](https://github.com/adnanh/webhook) 实现代码备份同步和自动部署。
 
-4. 利用整合的 [vscode-server](https://github.com/cdr/code-server) 和 [kod-explorer](https://github.com/kalcaddle/KodExplorer) 实现云端编码，和可视化文件管理/拖拽式上传。
+4. 利用 [vscode-server](https://github.com/cdr/code-server) 和 [kod-explorer](https://github.com/kalcaddle/KodExplorer) 实现云端编码，和可视化文件管理/拖拽式上传。
 
 ## 快速开始
 
@@ -38,7 +38,7 @@ mysrv 崇尚直接在云服务器上编码、调试和执行，所以制作了�
 
 来一键安装 Mysrv、 Docker 与 Docker Compose。至此，安装完成。
 
-注：建议使用崭新出厂的服务器系统中运行该脚本，ArchLinux 系统因 Docker 官方未支持，所以需自行手动安装。虽然我使用 ArchLinux，但是我的服务器是 CentOS，所以建议使用 CentOS 来运行以避免环境不一致造成的问题 (尽管这几乎不可能发生)。
+注：建议使用崭新出厂的服务器系统中运行该脚本，ArchLinux 系统因 Docker 官方未支持，所以需自行手动安装。虽然我使用 ArchLinux，但是我的服务器是 CentOS，所以建议使用 CentOS 来运行以避免环境不一致造成的问题。
 
 ### 非 Linux 下安装
 
