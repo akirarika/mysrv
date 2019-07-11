@@ -1,0 +1,12 @@
+{
+    "workbench.colorTheme": "One Dark Pro",
+    "material-icon-theme.showWelcomeMessage": false,
+    "workbench.startupEditor": "newUntitledFile",
+    "terminal.integrated.shell.linux": "/bin/zsh",
+    "terminal.integrated.shell.osx": "/bin/zsh",
+    "workbench.iconTheme": "material-icon-theme",
+    "files.associations": {
+          "*.vue": "html",
+          "*.jsx": "javascript"
+      }
+}
