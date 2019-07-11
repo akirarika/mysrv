@@ -10,6 +10,8 @@ mysrv 是一套基于 Docker 的通用开发环境，为满足自己需求而制
 
 3. 利用 mysrv 中整合的 [gogs](https://github.com/gogs/gogs) 和 [webhook](https://github.com/adnanh/webhook) 实现代码备份同步和自动部署。
 
+4. 利用整合的 [vscode-server](https://github.com/cdr/code-server) 和 [kod-explorer](https://github.com/kalcaddle/KodExplorer) 实现云端编码，和可视化文件管理/拖拽式上传。
+
 ## 快速开始
 
 ### 下载 mysrv 至本地
@@ -304,11 +306,11 @@ DISABLE_REGISTRATION   = true
 
 来禁用 Gogs 的用户注册功能。
 
-## 在线开发调试 && 在线可视化管理文件/拖拽式文件上传
+### 在线开发调试 && 在线可视化管理文件/拖拽式文件上传
 
 Workspace 容器中，安装了 `VSCode Server` 与 `KodExplorer`，以实现在线开发调试和在线可视化管理文件/拖拽式文件上传。
 
-### VSCode Server
+#### VSCode Server
 
 使用方式：`http://{您的 ip 地址或域名}:8443/`
 
@@ -318,7 +320,7 @@ Workspace 容器中，安装了 `VSCode Server` 与 `KodExplorer`，以实现在
 
 修改默认密码请编辑 `workspace/code-server/password`，之所以使用文件而不使用 .env 或环境变量，是考虑到您可能需要实现动态密码的功能。
 
-### KodExplorer
+#### KodExplorer
 
 使用方式：`http://{您的 ip 地址或域名}:893/index.php`
 
