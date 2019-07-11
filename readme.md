@@ -1,6 +1,6 @@
 # mysrv
 
-mysrv 是一套自用的，基于 Docker 的通用开发环境。
+mysrv 是一套我自己在用的，基于 Docker 的通用开发环境。
 
 它可以用来：
 
