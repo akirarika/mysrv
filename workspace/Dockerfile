@@ -83,6 +83,10 @@ RUN echo "Install Code Server.." \
     && rm -rf /app/code-server1.1156-vsc1.33.1-linux-x64.tar.gz \
     && chmod -R 777 /app/code-server
 
+# 系统优化
+RUN echo "fs.inotify.max_user_watches=524288" >> /etc/sysctl.conf \
+    && sysctl -p
+
 # 运行各种程序
 RUN echo "#!/bin/bash" > /app/run.sh \
     && echo "php -S 0000:893 -t /app/kodexplorer &" >> /app/run.sh \
