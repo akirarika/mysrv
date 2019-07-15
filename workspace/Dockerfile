@@ -45,7 +45,7 @@ RUN echo "Install Nodejs.." \
     && apt-get install -y nodejs npm \
     && curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \
     && echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list \
-    && apt-get update && apt-get install yarn \
+    && apt-get update && apt-get install -y --no-install-recommends yarn \
     && apt-get clean
     
 # 安装 Java 环境
