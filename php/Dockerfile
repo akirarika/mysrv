@@ -7,3 +7,5 @@ RUN echo "Install PHP.." \
     && php -r "unlink('composer-setup.php');" \
     && mv composer.phar /usr/bin/composer \
     && apt-get clean
+    
+    WORKDIR /proj
