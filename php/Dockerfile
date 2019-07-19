@@ -1,11 +1,17 @@
-FROM ubuntu:18.04
+FROM php:7.3-fpm-stretch
 
-RUN apt-get update \
-    && apt-get install -y php php-bcmath php-bz2 php-calendar php-ctype php-curl php-dom php-enchant php-exif php-fileinfo php-ftp php-gd php-gettext php-gmp php-iconv php-intl php-json php-ldap php-mbstring php-mysqli php-mysqlnd php-opcache php-pdo php-phar php-posix php-pspell php-readline php-shmop php-simplexml php-snmp php-soap php-sockets php-sqlite3 php-sysvmsg php-sysvsem php-sysvshm php-wddx php-xml php-xsl \
-    && php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
-    && php "composer-setup.php" \
-    && php -r "unlink('composer-setup.php');" \
-    && mv composer.phar /usr/bin/composer \
+RUN apt-get update && apt-get install -y \
+        libfreetype6-dev \
+        libjpeg62-turbo-dev \
+        libpng-dev \
+        libzip-dev \
+        libbz2-dev \
+        libcurl4-gnutls-dev \
+        libxml2-dev \
+    && docker-php-ext-install -j$(nproc) iconv \
+    && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
+    && docker-php-ext-install -j$(nproc) gd \
+    && docker-php-ext-install opcache bcmath bz2 calendar ctype curl dom exif fileinfo gettext intl json mbstring pdo_mysql mysqli simplexml sysvmsg sysvsem sysvshm wddx xml zip \
     && apt-get clean
-    
+
 WORKDIR /proj
