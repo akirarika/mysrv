@@ -1,5 +1,9 @@
 # mysrv
 
+开箱即用的云端开发环境，实现在云端开发->编译->测试->生产🍻
+
+## 简介
+
 mysrv 是一套基于 Docker 的通用开发环境。
 
 它可以用来：
@@ -11,6 +15,8 @@ mysrv 是一套基于 Docker 的通用开发环境。
 3. 利用 [gogs](https://github.com/gogs/gogs) 和 [webhook](https://github.com/adnanh/webhook) 实现代码备份同步和自动部署。
 
 4. 利用 [vscode-server](https://github.com/cdr/code-server) 和 [kod-explorer](https://github.com/kalcaddle/KodExplorer) 实现云端编码，和可视化文件管理/拖拽式上传。
+
+ps. 目前仅支持 PHP / Web / Node 周边。
 
 ## 快速开始
 
