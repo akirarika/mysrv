@@ -1,5 +1,7 @@
 FROM ubuntu:18.04
 
+RUN export PASSWORD=123456
+
 # 初始化
 # ---> 目录说明
 #   -> /initmp 临时文件目录
@@ -80,7 +82,8 @@ RUN echo "Install webhook.." \
 # 安装 Code Server
 RUN echo "Install Code Server.." \
     && cd "/app" \
-    && wget "https://github.com/cdr/code-server/releases/download/1.1156-vsc1.33.1/code-server1.1156-vsc1.33.1-linux-x64.tar.gz" \
+    # && wget "https://github.com/cdr/code-server/releases/download/1.1156-vsc1.33.1/code-server1.1156-vsc1.33.1-linux-x64.tar.gz" \
+    && wget "https://github.com/cdr/code-server/releases/download/2.preview.9-vsc1.37.0/code-server2.preview.9-vsc1.37.0-linux-x86_64.tar.gz" \
     && tar -zxvf code-server1.1156-vsc1.33.1-linux-x64.tar.gz \
     && mv /app/code-server1.1156-vsc1.33.1-linux-x64 /app/code-server \
     && rm -rf /app/code-server1.1156-vsc1.33.1-linux-x64.tar.gz \
@@ -94,7 +97,8 @@ RUN echo "fs.inotify.max_user_watches=524288" >> /etc/sysctl.conf \
 RUN echo "#!/bin/bash" > /app/run.sh \
     && echo "php -S 0000:893 -t /app/kodexplorer &" >> /app/run.sh \
     && echo "/app/webhook/webhook -port 7009 -hotreload -hooks /app/webhook/hooks.json -verbose &" >> /app/run.sh \
-    && echo "/app/code-server/code-server /proj -e /app/code-server/expansions -d /app/code-server/home --password \`cat /app/code-server/password\` --disable-telemetry" >> /app/run.sh \
+    # && echo "/app/code-server/code-server /proj -e /app/code-server/expansions -d /app/code-server/home --password \`cat /app/code-server/password\` --disable-telemetry" >> /app/run.sh \
+    && echo "/app/code-server/code-server /proj -e /app/code-server/expansions -d /app/code-server/home  --auth password --port 8443 --disable-telemetry" >> /app/run.sh \
     && chmod -R 700 /app/run.sh
 
 WORKDIR /proj
